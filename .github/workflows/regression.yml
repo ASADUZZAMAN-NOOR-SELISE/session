@@ -45,34 +45,3 @@ jobs:
           name: regression-report-${{ github.run_number }}
           path: playwright-report/
           retention-days: 30
-      - name: 📧 Send result email
-        if: ${{ !cancelled() }}
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
-          username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
-          from: Playwright CI <${{ secrets.MAIL_USERNAME }}>
-          to: ${{ secrets.MAIL_TO }}
-          subject: "${{ job.status == 'success' && '✅ PASSED' || '❌ FAILED' }}: Regression Tests – ${{ github.repository }} (#${{ github.run_number }})"
-          html_body: |
-            <div style="font-family:Arial,sans-serif;max-width:600px;color:#333">
-              <div style="background:${{ job.status == 'success' && '#16a34a' || '#dc2626' }};color:#fff;padding:16px 20px;border-radius:6px 6px 0 0">
-                <h2 style="margin:0">${{ job.status == 'success' && '✅ Regression Tests Passed' || '❌ Regression Tests Failed' }}</h2>
-              </div>
-              <div style="border:1px solid #ddd;border-top:none;padding:20px;border-radius:0 0 6px 6px">
-                <p><b>Repository</b>&nbsp;&nbsp;${{ github.repository }}</p>
-                <p><b>Workflow</b>&nbsp;&nbsp;${{ github.workflow }}</p>
-                <p><b>Triggered By</b>&nbsp;&nbsp;${{ github.actor }}</p>
-                <p><b>Trigger Type</b>&nbsp;&nbsp;${{ github.event_name }}</p>
-                <p><b>Branch</b>&nbsp;&nbsp;${{ github.head_ref || github.ref_name }}</p>
-                <p><b>Commit</b>&nbsp;&nbsp;${{ github.sha }}</p>
-                <p>${{ job.status == 'success' && '🎉 All tests passed. The <b>Playwright Report</b> artifact is available on the run page.' || '⚠️ Check the uploaded <b>Playwright Report</b> artifact for detailed failure logs and screenshots.' }}</p>
-                <p>
-                  <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="display:inline-block;padding:10px 18px;border:1px solid #c7c7f0;border-radius:6px;color:#4f46e5;text-decoration:none;margin-right:8px">${{ job.status == 'success' && '🔍 View Run' || '🔍 View Failed Run' }}</a>
-                  <a href="${{ github.server_url }}/${{ github.repository }}" style="display:inline-block;padding:10px 18px;border:1px solid #c7c7f0;border-radius:6px;color:#4f46e5;text-decoration:none">📁 View Repository</a>
-                </p>
-              </div>
-            </div>
