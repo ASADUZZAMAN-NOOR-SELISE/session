@@ -227,6 +227,6 @@ test.describe('Login flow - negative', () => {
     await loginPage.login(USER, 'wrongPassword');
     await loginPage.expectError(MESSAGES.incorrect);
     await expect(loginPage.page).not.toHaveURL(URLS.shop);
-    await expect(shopPage.productCards).toHaveCount(0);
+    await expect(shopPage.productCards).toHaveCount(0)
   });
 });
