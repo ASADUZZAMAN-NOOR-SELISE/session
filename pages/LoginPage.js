@@ -91,6 +91,6 @@ export class LoginPage {
   async expectError(message) {
     await expect(this.errorAlert).toBeVisible();
     await expect(this.errorAlert).toHaveText(message);
-    await expect(this.page).toHaveURL(URLS.login);
+    await expect(this.page).toHaveURL(URLS.login)
   }
 }
