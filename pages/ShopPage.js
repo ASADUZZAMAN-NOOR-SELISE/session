@@ -14,6 +14,6 @@ export class ShopPage {
   async expectLoaded() {
     await expect(this.page).toHaveURL(URLS.shop);
     await expect(this.page).toHaveTitle(MESSAGES.shopTitle);
-    await expect(this.productCards.first()).toBeVisible();
+    await expect(this.productCards.first()).toBeVisible()
   }
 }
